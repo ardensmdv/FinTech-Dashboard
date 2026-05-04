@@ -1,6 +1,7 @@
 # =======================================================================================
 # PIECE 0: THE LIBRARY
 # =======================================================================================
+
 import yfinance as yf
 import math
 import time
@@ -8,6 +9,7 @@ import pandas as pd
 from datetime import datetime
 from tabulate import tabulate
 import feedparser
+import streamlit as sa
 
 # =======================================================================================
 # PIECE 1: DEFINE THE COMPANIES GLOSSARIES
