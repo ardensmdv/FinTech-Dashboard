@@ -9,7 +9,7 @@ import pandas as pd
 from datetime import datetime
 from tabulate import tabulate
 import feedparser
-import streamlit as sa
+import streamlit as st
 
 # =======================================================================================
 # PIECE 1: DEFINE THE COMPANIES GLOSSARIES
