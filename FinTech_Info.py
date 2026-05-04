@@ -375,3 +375,41 @@ def get_news(query_key, num_articles=3):
             "source"    : entry.get("source", {}).get("title", "N/A")
         })
     return results
+
+# =======================================================================================
+# PIECE 7: STREAMLIT UI
+# =======================================================================================
+st.set_page_config(page_title="FinTech Dashboard", layout="wide")
+st.title("📊 FinTech Sector Dashboard")
+st.caption(f"Data as of: {datetime.now().strftime('%B %d, %Y - %H:%M')}")
+
+# --- Load Data ---
+with st.spinner("Fetching data from Yahoo Finance..."):
+    data            = run_the_companies()
+    FINTECH_table   = pd.DataFrame(data)
+
+# --- Main Table ---
+st.subheader("🏢 Company Overview")
+st.dataframe(FINTECH_table, use_container_width=True)
+
+# --- Summary Tables ---
+category_summary, region_summary = get_summary(FINTECH_table)
+
+col1, col2 = st.columns(2)
+with col1:
+    st.subheader("📂 Median Multiples by Category")
+    st.dataframe(category_summary, use_container_width=True)
+
+with col2:
+    st.subheader("🌍 Median Multiples by Region")
+    st.dataframe(region_summary, use_container_width=True)
+
+# --- News Feed ---
+st.subheader("📰 News Feed")
+news_filter = st.selectbox("Filter News By:", list(NEWS_QUERIES.keys()))
+news_items  = get_news(news_filter, num_articles=5)
+
+for item in news_items:
+    st.markdown(f"**[{item['title']}]({item['link']})**")
+    st.caption(f"{item['source']} — {item['published']}")
+    st.divider()
